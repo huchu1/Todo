@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO list 연습</title>
+    <style>
+      #app {width: 745px; margin: 0 auto;}
+      h1 {text-align: center; color: blueviolet;}
+      #inBox {border: 2px solid blueviolet; outline: none; width: 600px; padding: 10px 15px; font-size: 22px; border-radius: 10px;}
+      .addBtn {padding: 10px 30px; font-size: 22px; border-radius: 10px; background-color: blueviolet; color: #fff; border: none; outline: none;}
+      .list {padding: 0; margin-top: 80px;}
+      .list li {line-height: 2; font-size: 22px; color: #555; border-bottom: 1px dashed #ddd; list-style-position: inside;}
+      .list li button {margin: 5px 2px 0; padding: 5px 10px; float: right; font-size: 16px; border-radius: 5px; background-color: blueviolet; color: #fff; border: none; outline: none;}
+      .btn{margin: 0 auto; padding: 5px 10px; background-color: blueviolet; color: #fff; border: none; border-radius: 5%;}
+    </style>
+</head>
+<body>
+   <div id="app">
+      <h1>{{ title }}</h1>
+      <div id="inputBox">
+        <input type="text" :id="idName" v-model="todo">
+        <input type="submit" v-bind:class="className" @click="addTodo" value="등록">
+      </div>
+      <p>{{todo}}</p>
+      <p>{{todos}}</p>
+      <ol :class="olClass">
+        <li v-for="(todo, idx) in todos"> 
+            {{ todo }} <button v-on:click="delBtn(idx)">X 삭제</button> 
+        </li>
+      </ol>
+      <div class="clear">
+        <button v-on:click="clearAllTodo" class="btn">전체 삭제</button>
+      </div>
+   </div> 
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+   <script>
+     new Vue({
+         el: '#app',
+         data: {
+             title: "오늘 할일 목록 만들기",
+             className: "addBtn",
+             idName: "inBox",
+             olClass: "list",
+             todo: "",
+             todos: [],
+         },
+         methods: {
+             addTodo: function(){
+                if (this.todo!=="") {
+                    this.todos.push(this.todo);
+                    this.todo="";
+                }
+             },
+             delBtn: function(idx){
+                console.log(idx);
+                this.todos.splice(idx, 1);
+             },
+             clearAllTodo: function(){
+               this.todos=[];
+             },
+         },
+     });  
+   </script>
+</body>
+</html>
